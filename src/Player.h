@@ -18,8 +18,7 @@ class Player {
 int start_position_x = 30;
 int start_position_y = 400;
 float gravity = 9.81;
-int angle = 70;
-int velocity = 80;
+
 
 
 //public:std::shared_ptr<SDL_Texture> loadTexture(SDL_Renderer *, std::string);

@@ -16,7 +16,8 @@
 //
 //    SDL_Texture *tex = SDL_CreateTextureFromSurface(renderer, bitmap);
 //
-//    errcheck(tex == nullptr);
+//    errcheck(tex =
+//    = nullptr);
 //    SDL_SetTextureBlendMode(tex, SDL_BLENDMODE_BLEND);
 //    std::shared_ptr<SDL_Texture> texture(
 //            tex, [](SDL_Texture *ptr) { SDL_DestroyTexture(ptr); });

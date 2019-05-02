@@ -1,6 +1,6 @@
 /**
  * This is the simple hello world for SDL2.
- * 
+ *
  * You need C++14 to compile this.
  */
 
@@ -28,6 +28,7 @@
     }                                                                          \
   }
 
+
 int main(int, char **) {
     using namespace std;
     using namespace std::chrono;
@@ -37,6 +38,7 @@ int main(int, char **) {
     bool increasePower = false;
     bool throwRectangle = false;
     int power;
+    int angle = 45;
     double time = 0;
 
     errcheck(SDL_Init(SDL_INIT_VIDEO) != 0);
@@ -85,18 +87,34 @@ int main(int, char **) {
                 increasePower = false;
                 throwRectangle = true;
             }
-
+            if (kstate[SDL_SCANCODE_UP]){
+                angle++;
+                if(angle >= 90){
+                    angle = 89;
+                }
+            }
+            if(kstate[SDL_SCANCODE_DOWN]){
+                angle--;
+                if(angle <= 0){
+                    angle = 1;
+                }
+            }
         }
 
 
+
+
+        printf("%s %d","\n kat:", angle );
+
         if (increasePower) {
             power = powerBar->increasePower(renderer.get());
+            powerBar->increaseAngle(renderer.get(),angle);
         } else if (drawPowerBar) {
             power = powerBar->drawPowerBar(renderer.get());
         }
         if(throwRectangle) {
             time+=0.02;
-            player->throwRectangle(90, power, time, renderer.get());
+            player->throwRectangle(angle, power, time, renderer.get());
         }
 
 

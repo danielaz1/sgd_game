@@ -43,4 +43,19 @@ int PowerBar::increasePower(SDL_Renderer *renderer) {
     drawPowerBar(renderer);
     return power;
 }
+int PowerBar::increaseAngle(SDL_Renderer *renderer,int angle) {
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 
+    int x = 100 * cos(toRadians(angle));
+    int y = 100 * sin(toRadians(angle));
+
+    SDL_RenderDrawLine(renderer, 30, 400,30 + x , 400 - y );
+
+    printf("%s %d","\n x:", x );
+    printf("%s %d","\n y:", y );
+    //SDL_RenderDrawLine(renderer, 30, 400, 130, 400);
+    SDL_RenderDrawLine(renderer, 0, 400, 640, 400);
+}
+double PowerBar::toRadians(int angle) {
+    return (angle * 3.14)/180;
+}

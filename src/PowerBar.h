@@ -11,6 +11,8 @@ class PowerBar {
 
 public:int drawPowerBar(SDL_Renderer* renderer);
 public:int increasePower(SDL_Renderer* renderer);
+public:int increaseAngle(SDL_Renderer* renderer,int angle);
+private:double toRadians(int angle);
 
 };
 
