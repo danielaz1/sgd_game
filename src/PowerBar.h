@@ -6,6 +6,7 @@
 #define SDLDEMO_POWERBAR_H
 
 #include <SDL2/SDL.h>
+#include "GameConstants.h"
 
 class PowerBar {
 

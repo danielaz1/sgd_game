@@ -8,6 +8,9 @@
 #include <SDL2/SDL.h>
 #include <cmath>
 #include "lodepng.h"
+#include "GameConstants.h"
+
+#define TIME_INTERVAL 0.03
 #define errcheck(e)                                                            \
   {                                                                            \
     if (e)                                                                     \
@@ -16,17 +19,23 @@
 
 class Player {
 
-int start_position_x = 30;
-int start_position_y = 400;
-float gravity = 9.81;
+    int counter = 0;
+    int distance_x = GameConstants::PLAYER_MIN_X;
+    float gravity = 9.81;
+    float time;
 
 
+public:
+    std::shared_ptr<SDL_Texture> loadTexture(SDL_Renderer *, std::string);
 
-public:std::shared_ptr<SDL_Texture> loadTexture(SDL_Renderer *, std::string);
+public:
+    int throwRectangle(int angle, double power, SDL_Renderer *renderer);
+    float increaseTime();
 
-public:void throwRectangle(int angle, int power, double time, SDL_Renderer *renderer);
-
-private:double toRadians(int angle);
+private:
+    double toRadians(int angle);
+    int calculateX(int angle, double power, int);
+    int calculateY(int angle, double power, int);
 };
 
 

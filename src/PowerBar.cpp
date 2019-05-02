@@ -3,11 +3,9 @@
 //
 
 #include "PowerBar.h"
+#include "GameConstants.h"
 
 int power=20;
-int max_power = 180;
-int min_power = 0;
-
 bool add = true;
 
 int PowerBar::drawPowerBar(SDL_Renderer *renderer) {
@@ -34,9 +32,9 @@ int PowerBar::drawPowerBar(SDL_Renderer *renderer) {
 }
 
 int PowerBar::increasePower(SDL_Renderer *renderer) {
-    if (power == max_power) {
+    if (power == GameConstants::MAX_POWER) {
         add = false;
-    } else if (power == min_power){
+    } else if (power == GameConstants::MIN_POWER){
         add = true;
     }
     add ? power+=10 : power-=10;
@@ -55,7 +53,11 @@ int PowerBar::increaseAngle(SDL_Renderer *renderer,int angle) {
     printf("%s %d","\n y:", y );
     //SDL_RenderDrawLine(renderer, 30, 400, 130, 400);
     SDL_RenderDrawLine(renderer, 0, 400, 640, 400);
+
+    return angle;
 }
+
+
 double PowerBar::toRadians(int angle) {
-    return (angle * 3.14)/180;
+    return (angle * M_PI)/180;
 }

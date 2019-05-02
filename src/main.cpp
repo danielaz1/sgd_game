@@ -15,6 +15,7 @@
 #include <thread>
 #include <tuple>
 #include <vector>
+#include "GameConstants.h"
 #include "Player.h"
 #include "PowerBar.h"
 
@@ -32,11 +33,11 @@
 int main(int, char **) {
     using namespace std;
     using namespace std::chrono;
-    const int width = 640;
-    const int height = 480;
+    bool gameStarted = false;
     bool drawPowerBar = false;
     bool increasePower = false;
     bool throwRectangle = false;
+    int distance;
     int power;
     int angle = 45;
     double time = 0;
@@ -45,7 +46,7 @@ int main(int, char **) {
 
     shared_ptr<SDL_Window> window(SDL_CreateWindow(
             "My Next Superawesome Game", SDL_WINDOWPOS_UNDEFINED,
-            SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_SHOWN),
+            SDL_WINDOWPOS_UNDEFINED, GameConstants::WINDOW_WIDTH, GameConstants::WINDOW_HEIGHT, SDL_WINDOW_SHOWN),
                                   [=](auto w) { SDL_DestroyWindow(w); });
 
     errcheck(window == nullptr);
@@ -77,8 +78,11 @@ int main(int, char **) {
                     if (event.key.keysym.sym == SDLK_ESCAPE) game_active = false;
                     break;
                 case SDL_MOUSEBUTTONDOWN:
-                    increasePower = true;
-                    drawPowerBar = true;
+                    if (!gameStarted) {
+                        gameStarted = true;
+                        increasePower = true;
+                        drawPowerBar = true;
+                    }
                     break;
             }
 
@@ -104,7 +108,7 @@ int main(int, char **) {
 
 
 
-        printf("%s %d","\n kat:", angle );
+        printf("%s %d","\n distance:", distance);
 
         if (increasePower) {
             power = powerBar->increasePower(renderer.get());
@@ -113,8 +117,8 @@ int main(int, char **) {
             power = powerBar->drawPowerBar(renderer.get());
         }
         if(throwRectangle) {
-            time+=0.02;
-            player->throwRectangle(angle, power, time, renderer.get());
+            time=player->increaseTime();
+            distance = player->throwRectangle(angle, power, renderer.get());
         }
 
 
