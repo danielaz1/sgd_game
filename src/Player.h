@@ -7,11 +7,12 @@
 
 #include <SDL2/SDL.h>
 #include <cmath>
-//#define errcheck(e)                                                            \
-//  {                                                                            \
-//    if (e)                                                                     \
-//      throw std::invalid_argument(SDL_GetError());                             \
-//  }
+#include "lodepng.h"
+#define errcheck(e)                                                            \
+  {                                                                            \
+    if (e)                                                                     \
+      throw std::invalid_argument(SDL_GetError());                             \
+  }
 
 class Player {
 
@@ -21,7 +22,7 @@ float gravity = 9.81;
 
 
 
-//public:std::shared_ptr<SDL_Texture> loadTexture(SDL_Renderer *, std::string);
+public:std::shared_ptr<SDL_Texture> loadTexture(SDL_Renderer *, std::string);
 
 public:void throwRectangle(int angle, int power, double time, SDL_Renderer *renderer);
 
