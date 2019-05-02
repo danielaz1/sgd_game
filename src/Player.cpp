@@ -2,8 +2,7 @@
 // Created by daniela on 15.04.19.
 //
 
-#include <memory>
-#include <vector>
+
 #include "Player.h"
 
 std::shared_ptr<SDL_Texture> Player::loadTexture(SDL_Renderer *renderer, const std::string fname) {
@@ -29,7 +28,7 @@ std::shared_ptr<SDL_Texture> Player::loadTexture(SDL_Renderer *renderer, const s
 int Player::throwRectangle(int angle, double power, SDL_Renderer *renderer) {
 
     if (counter != 0) {
-        power -= counter * 10;
+        power -= counter * 30;
         if (power < 0) {
             power = 0;
         }
@@ -39,11 +38,7 @@ int Player::throwRectangle(int angle, double power, SDL_Renderer *renderer) {
     int position_y = calculateY(angle, power, GameConstants::PLAYER_MIN_Y);
     int position_x;
 
-    if (position_y >= GameConstants::PLAYER_MIN_Y) {
-        time = TIME_INTERVAL;
-        distance_x = distance;
-        counter++;
-    }
+    calculateCollision(position_y, distance);
 
     position_x = distance;
     if (position_x > GameConstants::WINDOW_WIDTH / 2) {
@@ -83,6 +78,14 @@ int Player::calculateY(int angle, double power, int start_y) {
 
 float Player::increaseTime() {
     return time += TIME_INTERVAL;
+}
+
+void Player::calculateCollision(int position_y, int distance) {
+    if (position_y >= GameConstants::PLAYER_MIN_Y) { //ground
+        time = TIME_INTERVAL;
+        distance_x = distance;
+        counter++;
+    }
 }
 
 

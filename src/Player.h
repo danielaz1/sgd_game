@@ -2,13 +2,16 @@
 // Created by daniela on 15.04.19.
 //
 
-#ifndef SDLDEMO_PLAYER_H
-#define SDLDEMO_PLAYER_H
+#ifndef STRIKER_PLAYER_H
+#define STRIKER_PLAYER_H
 
 #include <SDL2/SDL.h>
 #include <cmath>
 #include "lodepng.h"
 #include "GameConstants.h"
+#include <memory>
+#include <vector>
+#include "Obstacle.h"
 
 #define TIME_INTERVAL 0.03
 #define errcheck(e)                                                            \
@@ -36,7 +39,9 @@ private:
     double toRadians(int angle);
     int calculateX(int angle, double power, int);
     int calculateY(int angle, double power, int);
+
+    void calculateCollision(int x, int distance);
 };
 
 
-#endif //SDLDEMO_PLAYER_H
+#endif //STRIKER_PLAYER_H
