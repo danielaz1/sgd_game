@@ -45,7 +45,7 @@ void Player::throwRectangle(int angle, int power, double time, SDL_Renderer *ren
 }
 
 double Player::toRadians(int angle) {
-    return (angle * M_1_PI)/180;
+    return (angle * M_PI)/180;
 }
 
 
