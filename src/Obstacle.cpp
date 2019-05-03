@@ -4,8 +4,12 @@
 
 #include "Obstacle.h"
 
-Obstacle::Obstacle(Obstacle::Type type) {
+Obstacle::Obstacle(Obstacle::Type type, int x) {
+    this->width=1500;
+    this->x=x;
+    this->heigth=50;
     this->type = type;
+    this->y=GameConstants::PLAYER_MIN_Y+40;
 }
 
 Obstacle::Obstacle(int x) {
@@ -16,23 +20,24 @@ Obstacle::Obstacle(int x) {
     this->x = x;
 }
 
+
 int Obstacle::getPowerFactor() {
     switch (type) {
         case GROUND:
             return -20;
         case STONE:
-            return -40;
+            return -25;
         case SPRING:
-            return 20;
-        case SPONGE:
-            return 5;
-        case TRAMPOLINE:
             return 10;
+        case SPONGE:
+            return 2;
+        case TRAMPOLINE:
+            return 5;
     }
 }
 
 bool Obstacle::isCollision(int player_x, int player_y) {
-    return player_x >= x && player_x <= x+width && player_y <= y && player_y >= y-heigth;
+    return player_x >= x && player_x <= x+width && player_y >= y-GameConstants::PLAYER_HEIGHT+5 && player_y <= y+heigth;
 }
 
 void Obstacle::draw(SDL_Renderer *renderer, int shift) {
@@ -57,13 +62,14 @@ int Obstacle::getColorByType() {
         case STONE:
             return 50;
         case SPRING:
-            return 150;
+            return 200;
         case SPONGE:
             return 100;
         case TRAMPOLINE:
-            return 200;
+            return 255;
     }
 }
+
 
 
 

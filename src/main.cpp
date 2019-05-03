@@ -19,6 +19,7 @@
 #include "Player.h"
 #include "PowerBar.h"
 #include "Obstacle.h"
+#include "ObstacleGenerator.h"
 
 // check for errors
 #define errcheck(e)                                                            \
@@ -58,16 +59,7 @@ int main(int, char **) {
 
     PowerBar *powerBar = new PowerBar();
     Player *player = new Player();
-
-    Obstacle *obstacle1 = new Obstacle(200);
-    Obstacle *obstacle2 = new Obstacle(1200);
-    Obstacle *obstacle3 = new Obstacle(400);
-    Obstacle *obstacle4 = new Obstacle(1500);
-    Obstacle *obstacle5 = new Obstacle(600);
-    Obstacle *obstacle6 = new Obstacle(1700);
-    Obstacle *obstacle7 = new Obstacle(850);
-    Obstacle *obstacle8 = new Obstacle(1980);
-    Obstacle *obstacle9 = new Obstacle(1000);
+    ObstacleGenerator *obstacleGenerator = new ObstacleGenerator();
 
     //auto dt = 15ms;
     milliseconds dt(15);
@@ -116,9 +108,6 @@ int main(int, char **) {
             }
         }
 
-
-
-
         printf("%s %d","\n distance:", distance);
 
         if (increasePower) {
@@ -128,24 +117,18 @@ int main(int, char **) {
             power = powerBar->drawPowerBar(renderer.get());
         }
         if(throwRectangle) {
-            player->increaseTime();
-            distance = player->throwRectangle(angle, power, renderer.get());
-
             int shift = 0;
             if (distance >= GameConstants::WINDOW_WIDTH/2) {
                 shift = distance - GameConstants::WINDOW_WIDTH/2;
             }
-            obstacle1->draw(renderer.get(), shift);
-            obstacle2->draw(renderer.get(), shift);
-            obstacle3->draw(renderer.get(), shift);
-            obstacle4->draw(renderer.get(), shift);
-            obstacle5->draw(renderer.get(), shift);
-            obstacle6->draw(renderer.get(), shift);
-            obstacle7->draw(renderer.get(), shift);
-            obstacle8->draw(renderer.get(), shift);
-            obstacle9->draw(renderer.get(), shift);
-        }
 
+            obstacleGenerator->generate(distance);
+
+            obstacleGenerator->drawAll(renderer.get(), shift);
+            player->increaseTime();
+            distance = player->throwRectangle(angle, power, renderer.get(), obstacleGenerator);
+
+        }
 
         SDL_RenderPresent(renderer.get()); // draw frame to screen
         this_thread::sleep_until(current_time = current_time + dt);

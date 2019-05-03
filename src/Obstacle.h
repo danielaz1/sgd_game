@@ -19,12 +19,12 @@ public:
 private:
     int x;
     int y  = GameConstants::PLAYER_MIN_Y;
-    int width = 40;
-    int heigth = 30;
+    int width = 100;
+    int heigth = 40;
 
 
 public:
-    Obstacle(Type);
+    Obstacle(Type, int);
     Obstacle(int);
 
 public:
@@ -32,8 +32,6 @@ public:
     bool isCollision(int player_x, int player_y);
 
     void draw(SDL_Renderer *, int);
-
-    void colorByType(SDL_Renderer *renderer);
 
     int getColorByType();
 };

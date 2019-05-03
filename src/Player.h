@@ -12,8 +12,9 @@
 #include <memory>
 #include <vector>
 #include "Obstacle.h"
+#include "ObstacleGenerator.h"
 
-#define TIME_INTERVAL 0.03
+#define TIME_INTERVAL 0.04
 #define errcheck(e)                                                            \
   {                                                                            \
     if (e)                                                                     \
@@ -24,15 +25,17 @@ class Player {
 
     int counter = 0;
     int distance_x = GameConstants::PLAYER_MIN_X;
+    int distance_y = GameConstants::PLAYER_MIN_Y;
     float gravity = 9.81;
-    float time;
+    float time = 0;
+    float powerFactor = 0;
 
 
 public:
     std::shared_ptr<SDL_Texture> loadTexture(SDL_Renderer *, std::string);
 
 public:
-    int throwRectangle(int angle, double power, SDL_Renderer *renderer);
+    int throwRectangle(int angle, double power, SDL_Renderer *renderer, ObstacleGenerator *);
     float increaseTime();
 
 private:

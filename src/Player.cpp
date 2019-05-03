@@ -25,20 +25,31 @@ std::shared_ptr<SDL_Texture> Player::loadTexture(SDL_Renderer *renderer, const s
     return texture;
 }
 
-int Player::throwRectangle(int angle, double power, SDL_Renderer *renderer) {
+int Player::throwRectangle(int angle, double power, SDL_Renderer *renderer, ObstacleGenerator *obstacleGenerator) {
 
-    if (counter != 0) {
-        power -= counter * 30;
-        if (power < 0) {
-            power = 0;
-        }
+    if (power+powerFactor < 0) {
+        power = 0;
+    } else {
+        power += powerFactor;
     }
 
     int distance = calculateX(angle, power, distance_x);
-    int position_y = calculateY(angle, power, GameConstants::PLAYER_MIN_Y);
+    int position_y = calculateY(angle, power, distance_y);
     int position_x;
 
-    calculateCollision(position_y, distance);
+    float newPowerFactor = obstacleGenerator->detectCollision(distance, position_y);
+    powerFactor+=newPowerFactor;
+
+    if (newPowerFactor != 0) {
+        distance_x = distance;
+        distance_y = position_y;
+        time = 0;
+      //  distance = calculateX(angle, power + powerFactor, distance_x);
+    //    position_y = calculateY(angle, power + powerFactor, distance_y);
+    }
+
+
+
 
     position_x = distance;
     if (position_x > GameConstants::WINDOW_WIDTH / 2) {
@@ -50,8 +61,8 @@ int Player::throwRectangle(int angle, double power, SDL_Renderer *renderer) {
 
     rectangle.x = position_x;
     rectangle.y = position_y;
-    rectangle.w = 20;
-    rectangle.h = 20;
+    rectangle.w = GameConstants::PLAYER_WIDTH;
+    rectangle.h = GameConstants::PLAYER_HEIGHT;
     SDL_RenderFillRect(renderer, &rectangle);
 
     return distance;
@@ -82,8 +93,9 @@ float Player::increaseTime() {
 
 void Player::calculateCollision(int position_y, int distance) {
     if (position_y >= GameConstants::PLAYER_MIN_Y) { //ground
-        time = TIME_INTERVAL;
+        time = 0;
         distance_x = distance;
+        distance_y =  GameConstants::PLAYER_MIN_Y;
         counter++;
     }
 }
