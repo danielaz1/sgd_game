@@ -13,14 +13,14 @@
 class Obstacle {
 public:
     enum Type {
-        GROUND, STONE, SPRING, SPONGE, TRAMPOLINE
+        GROUND, STONE, SPRING, SPONGE, TRAMPOLINE, CLOUD
     } type;
 
 private:
     int x;
     int y  = GameConstants::PLAYER_MIN_Y;
     int width = 100;
-    int heigth = 40;
+    int height = 40;
 
 
 public:
@@ -33,7 +33,9 @@ public:
 
     void draw(SDL_Renderer *, int);
 
+private:
     int getColorByType();
+    int getY();
 };
 
 

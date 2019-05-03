@@ -13,15 +13,15 @@ ObstacleGenerator::ObstacleGenerator() {
 void ObstacleGenerator::generate(int distance) {
 
     if (counter == 0 || distance / counter > 2000) {
-        auto obstacle1 = new Obstacle(Obstacle::Type::GROUND, counter*1000);
-        obstacles.push_front(*obstacle1);
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < 10; i++) {
             auto obstacle = new Obstacle(counter * 2000 + (i+1) * 400);
             obstacles.push_front(*obstacle);
             if (counter>3) {
                 obstacles.pop_back();
             }
         }
+        auto obstacle1 = new Obstacle(Obstacle::Type::GROUND, counter*2000);
+        obstacles.push_front(*obstacle1);
         counter++;
     }
 }

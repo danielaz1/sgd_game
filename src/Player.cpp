@@ -44,8 +44,6 @@ int Player::throwRectangle(int angle, double power, SDL_Renderer *renderer, Obst
         distance_x = distance;
         distance_y = position_y;
         time = 0;
-      //  distance = calculateX(angle, power + powerFactor, distance_x);
-    //    position_y = calculateY(angle, power + powerFactor, distance_y);
     }
 
 

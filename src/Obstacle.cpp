@@ -7,9 +7,9 @@
 Obstacle::Obstacle(Obstacle::Type type, int x) {
     this->width=10000;
     this->x=x;
-    this->heigth=50;
+    this->height=50;
     this->type = type;
-    this->y=GameConstants::PLAYER_MIN_Y+40;
+    this->y=getY();
 }
 
 Obstacle::Obstacle(int x) {
@@ -18,6 +18,7 @@ Obstacle::Obstacle(int x) {
     std::uniform_int_distribution<std::mt19937::result_type> dist6(1, 4);
     type = (Type) dist6(rng);
     this->x = x;
+    this->y = getY();
 }
 
 
@@ -33,11 +34,29 @@ int Obstacle::getPowerFactor() {
             return 2;
         case TRAMPOLINE:
             return 5;
+        case CLOUD:
+            return -180;
     }
 }
 
+
+int Obstacle::getY() {
+    switch (type) {
+        case GROUND:
+            return GameConstants::PLAYER_MIN_Y+40;
+        case STONE:
+        case SPRING:
+        case SPONGE:
+        case TRAMPOLINE:
+            return GameConstants::PLAYER_MIN_Y;
+        case CLOUD:
+            return 400;
+    }
+}
+
+
 bool Obstacle::isCollision(int player_x, int player_y) {
-    return player_x >= x && player_x <= x+width && player_y >= y-GameConstants::PLAYER_HEIGHT+5 && player_y <= y+heigth;
+    return player_x >= x && player_x <= x+width && player_y >= y-GameConstants::PLAYER_HEIGHT+5 && player_y <= y+height;
 }
 
 void Obstacle::draw(SDL_Renderer *renderer, int shift) {
@@ -50,7 +69,7 @@ void Obstacle::draw(SDL_Renderer *renderer, int shift) {
     rectangle.x = x - shift;
     rectangle.y = y;
     rectangle.w = width;
-    rectangle.h = heigth;
+    rectangle.h = height;
     SDL_RenderFillRect(renderer, &rectangle);
 
 }
@@ -67,6 +86,8 @@ int Obstacle::getColorByType() {
             return 100;
         case TRAMPOLINE:
             return 255;
+        case CLOUD:
+            return 150;
     }
 }
 
