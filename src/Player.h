@@ -14,7 +14,7 @@
 #include "Obstacle.h"
 #include "ObstacleGenerator.h"
 
-#define TIME_INTERVAL 0.04
+#define TIME_INTERVAL 0.05
 #define errcheck(e)                                                            \
   {                                                                            \
     if (e)                                                                     \

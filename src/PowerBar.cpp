@@ -13,17 +13,21 @@ int PowerBar::drawPowerBar(SDL_Renderer *renderer) {
     SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
     SDL_Rect rectangle;
 
-    rectangle.x = 200;
-    rectangle.y = 400;
-    rectangle.w = 200;
-    rectangle.h = 30;
+    int width = 200;
+    int height = 30;
+    int x = GameConstants::WINDOW_WIDTH/2 - width/2;
+    int y = GameConstants::WINDOW_HEIGHT - 50;
+    rectangle.x = x;
+    rectangle.y = y;
+    rectangle.w = width;
+    rectangle.h = height;
     SDL_RenderFillRect(renderer, &rectangle);
 
     SDL_SetRenderDrawColor(renderer, 150, 100, 100, 255);
     SDL_Rect rectangle1;
 
-    rectangle1.x = 200 + power;
-    rectangle1.y = 405;
+    rectangle1.x = x + power;
+    rectangle1.y = y + 5;
     rectangle1.w = 20;
     rectangle1.h = 20;
     SDL_RenderFillRect(renderer, &rectangle1);
@@ -44,15 +48,17 @@ int PowerBar::increasePower(SDL_Renderer *renderer) {
 int PowerBar::increaseAngle(SDL_Renderer *renderer,int angle) {
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 
+    int start_y = GameConstants::WINDOW_HEIGHT - 50;
+
     int x = 100 * cos(toRadians(angle));
     int y = 100 * sin(toRadians(angle));
 
-    SDL_RenderDrawLine(renderer, 30, 400,30 + x , 400 - y );
+    SDL_RenderDrawLine(renderer, 30, start_y,30 + x , start_y - y );
 
     printf("%s %d","\n x:", x );
     printf("%s %d","\n y:", y );
     //SDL_RenderDrawLine(renderer, 30, 400, 130, 400);
-    SDL_RenderDrawLine(renderer, 0, 400, 640, 400);
+    SDL_RenderDrawLine(renderer, 0, start_y, GameConstants::WINDOW_WIDTH, start_y);
 
     return angle;
 }

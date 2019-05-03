@@ -5,7 +5,7 @@
 #include "Obstacle.h"
 
 Obstacle::Obstacle(Obstacle::Type type, int x) {
-    this->width=1500;
+    this->width=10000;
     this->x=x;
     this->heigth=50;
     this->type = type;
