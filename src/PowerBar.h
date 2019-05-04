@@ -15,8 +15,7 @@ class PowerBar {
 public:std::shared_ptr<SDL_Texture> texture;
 public:int drawPowerBar(SDL_Renderer* renderer);
 public:int increasePower(SDL_Renderer* renderer);
-public:int increaseAngle(SDL_Renderer* renderer,int angle);
-private:double toRadians(int angle);
+public:int increaseAngle(SDL_Renderer* renderer,int angle, int);
 
 public:PowerBar(SDL_Renderer* renderer);
 };

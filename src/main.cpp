@@ -43,6 +43,7 @@ int main(int, char **) {
     int power=0;
     int angle = 45;
     int shift = 0;
+    int angleShot = 0;
 
     errcheck(SDL_Init(SDL_INIT_VIDEO) != 0);
 
@@ -97,6 +98,7 @@ int main(int, char **) {
                 increasePower = false;
                 throwRectangle = true;
                 drawPowerBar = false;
+                angleShot = angle;
             }
             if (kstate[SDL_SCANCODE_UP]){
                 angle++;
@@ -112,9 +114,7 @@ int main(int, char **) {
             }
         }
 
-        printf("%s %d","\n distance:", distance);
-
-
+        printf("%s %d","\n score:", distance);
 
         obstacleGenerator->generate(distance);
 
@@ -122,7 +122,7 @@ int main(int, char **) {
 
         if (increasePower) {
             power = powerBar->increasePower(renderer.get());
-            powerBar->increaseAngle(renderer.get(),angle);
+            powerBar->increaseAngle(renderer.get(),angle, shift);
         } else if (drawPowerBar) {
             power = powerBar->drawPowerBar(renderer.get());
         }
@@ -131,13 +131,9 @@ int main(int, char **) {
             if (distance >= GameConstants::WINDOW_WIDTH/2) {
                 shift = distance - GameConstants::WINDOW_WIDTH/2;
             }
-
-//            obstacleGenerator->generate(distance);
-//
-//            obstacleGenerator->drawAll(renderer.get(), shift);
             player->increaseTime();
-            distance = player->throwRectangle(angle, power, renderer.get(), obstacleGenerator);
-
+            distance = player->throwRectangle(angleShot, power, renderer.get(), obstacleGenerator);
+            powerBar->increaseAngle(renderer.get(),angle, shift);
         }
 
         SDL_RenderPresent(renderer.get()); // draw frame to screen

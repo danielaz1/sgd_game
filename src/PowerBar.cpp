@@ -45,20 +45,14 @@ int PowerBar::increasePower(SDL_Renderer *renderer) {
     drawPowerBar(renderer);
     return power;
 }
-int PowerBar::increaseAngle(SDL_Renderer *renderer,int angle) {
+int PowerBar::increaseAngle(SDL_Renderer *renderer,int angle,  int shift ){
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-
-    int start_y = GameConstants::WINDOW_HEIGHT - 50;
-
-    int x = 100 * cos(toRadians(angle));
-    int y = 100 * sin(toRadians(angle));
-
     SDL_Rect rectangle;
 
     int width = 100;
     int height = 200;
-    int x1 = 0;
-    int y1 = GameConstants::PLAYER_MIN_Y- height + 35;
+    int x1 = 0 - shift - 20;
+    int y1 = GameConstants::PLAYER_MIN_Y- height + 40;
     rectangle.x = x1;
     rectangle.y = y1 ;
     rectangle.w = width;
@@ -70,10 +64,6 @@ int PowerBar::increaseAngle(SDL_Renderer *renderer,int angle) {
     SDL_RenderCopyEx(renderer, texture.get(), NULL, &rectangle, 90 - angle, &center, SDL_FLIP_HORIZONTAL);
 
     return angle;
-}
-
-double PowerBar::toRadians(int angle) {
-    return (angle * M_PI)/180;
 }
 
 PowerBar::PowerBar(SDL_Renderer *renderer) {
