@@ -53,23 +53,20 @@ int PowerBar::increaseAngle(SDL_Renderer *renderer,int angle) {
     int x = 100 * cos(toRadians(angle));
     int y = 100 * sin(toRadians(angle));
 
-    SDL_RenderDrawLine(renderer, 30, start_y,30 + x , start_y - y );
-
-   SDL_Rect rectangle;
+    SDL_Rect rectangle;
 
     int width = 100;
     int height = 200;
-    int x1 = 30;
-    int y1 = GameConstants::PLAYER_MIN_Y- height +35;
+    int x1 = 0;
+    int y1 = GameConstants::PLAYER_MIN_Y- height + 35;
     rectangle.x = x1;
     rectangle.y = y1 ;
     rectangle.w = width;
     rectangle.h = height;
 
     SDL_Point center;
-    center.x = x1;
-    center.y = y1;
-
+    center.x = 50;
+    center.y = 200;
     SDL_RenderCopyEx(renderer, texture.get(), NULL, &rectangle, 90 - angle, &center, SDL_FLIP_HORIZONTAL);
 
     return angle;
