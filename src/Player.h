@@ -29,12 +29,14 @@ class Player {
     float gravity = 9.81;
     float time = 0;
     float powerFactor = 0;
+    std::shared_ptr<SDL_Texture> texture;
 
 
 public:
-    std::shared_ptr<SDL_Texture> loadTexture(SDL_Renderer *, std::string);
+    static std::shared_ptr<SDL_Texture> loadTexture(SDL_Renderer *, std::string);
 
 public:
+    Player(SDL_Renderer *renderer);
     int throwRectangle(int angle, double power, SDL_Renderer *renderer, ObstacleGenerator *);
     float increaseTime();
 

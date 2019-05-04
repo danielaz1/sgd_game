@@ -29,11 +29,11 @@ int Obstacle::getPowerFactor() {
         case STONE:
             return -25;
         case SPRING:
-            return 10;
+            return 20;
         case SPONGE:
-            return 2;
-        case TRAMPOLINE:
             return 5;
+        case TRAMPOLINE:
+            return 10;
         case CLOUD:
             return -180;
     }

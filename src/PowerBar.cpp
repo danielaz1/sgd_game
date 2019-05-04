@@ -55,15 +55,30 @@ int PowerBar::increaseAngle(SDL_Renderer *renderer,int angle) {
 
     SDL_RenderDrawLine(renderer, 30, start_y,30 + x , start_y - y );
 
-    printf("%s %d","\n x:", x );
-    printf("%s %d","\n y:", y );
-    //SDL_RenderDrawLine(renderer, 30, 400, 130, 400);
-    SDL_RenderDrawLine(renderer, 0, start_y, GameConstants::WINDOW_WIDTH, start_y);
+   SDL_Rect rectangle;
+
+    int width = 100;
+    int height = 200;
+    int x1 = 30;
+    int y1 = GameConstants::PLAYER_MIN_Y- height +35;
+    rectangle.x = x1;
+    rectangle.y = y1 ;
+    rectangle.w = width;
+    rectangle.h = height;
+
+    SDL_Point center;
+    center.x = x1;
+    center.y = y1;
+
+    SDL_RenderCopyEx(renderer, texture.get(), NULL, &rectangle, 90 - angle, &center, SDL_FLIP_HORIZONTAL);
 
     return angle;
 }
 
-
 double PowerBar::toRadians(int angle) {
     return (angle * M_PI)/180;
+}
+
+PowerBar::PowerBar(SDL_Renderer *renderer) {
+    texture = Player::loadTexture(renderer,"data/cannon.png");
 }

@@ -42,6 +42,7 @@ int main(int, char **) {
     int distance=0;
     int power=0;
     int angle = 45;
+    int shift = 0;
 
     errcheck(SDL_Init(SDL_INIT_VIDEO) != 0);
 
@@ -53,12 +54,15 @@ int main(int, char **) {
     errcheck(window == nullptr);
 
     shared_ptr<SDL_Renderer> renderer(SDL_CreateRenderer(
-            window.get(), -1, SDL_RENDERER_ACCELERATED), // SDL_RENDERER_PRESENTVSYNC
+            window.get(), -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_TARGETTEXTURE), // SDL_RENDERER_PRESENTVSYNC
                                       [=](auto r) { SDL_DestroyRenderer(r); });
     errcheck(renderer == nullptr);
 
-    PowerBar *powerBar = new PowerBar();
-    Player *player = new Player();
+
+
+
+    PowerBar *powerBar = new PowerBar(renderer.get());
+    Player *player = new Player(renderer.get());
     ObstacleGenerator *obstacleGenerator = new ObstacleGenerator();
 
     //auto dt = 15ms;
@@ -110,21 +114,27 @@ int main(int, char **) {
 
         printf("%s %d","\n distance:", distance);
 
+
+
+        obstacleGenerator->generate(distance);
+
+        obstacleGenerator->drawAll(renderer.get(), shift);
+
         if (increasePower) {
             power = powerBar->increasePower(renderer.get());
             powerBar->increaseAngle(renderer.get(),angle);
         } else if (drawPowerBar) {
             power = powerBar->drawPowerBar(renderer.get());
         }
+
         if(throwRectangle) {
-            int shift = 0;
             if (distance >= GameConstants::WINDOW_WIDTH/2) {
                 shift = distance - GameConstants::WINDOW_WIDTH/2;
             }
 
-            obstacleGenerator->generate(distance);
-
-            obstacleGenerator->drawAll(renderer.get(), shift);
+//            obstacleGenerator->generate(distance);
+//
+//            obstacleGenerator->drawAll(renderer.get(), shift);
             player->increaseTime();
             distance = player->throwRectangle(angle, power, renderer.get(), obstacleGenerator);
 

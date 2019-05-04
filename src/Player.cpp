@@ -7,7 +7,7 @@
 
 std::shared_ptr<SDL_Texture> Player::loadTexture(SDL_Renderer *renderer, const std::string fname) {
     std::vector<unsigned char> image;
-    unsigned width, height;
+    unsigned width=20, height=20;
     errcheck(lodepng::decode(image, width, height, fname));
 
     SDL_Surface *bitmap = SDL_CreateRGBSurfaceWithFormat(0, width, height, 32,
@@ -46,9 +46,6 @@ int Player::throwRectangle(int angle, double power, SDL_Renderer *renderer, Obst
         time = 0;
     }
 
-
-
-
     position_x = distance;
     if (position_x > GameConstants::WINDOW_WIDTH / 2) {
         position_x = GameConstants::WINDOW_WIDTH / 2;
@@ -61,8 +58,8 @@ int Player::throwRectangle(int angle, double power, SDL_Renderer *renderer, Obst
     rectangle.y = position_y;
     rectangle.w = GameConstants::PLAYER_WIDTH;
     rectangle.h = GameConstants::PLAYER_HEIGHT;
-    SDL_RenderFillRect(renderer, &rectangle);
-
+   // SDL_RenderFillRect(renderer, &rectangle);
+    SDL_RenderCopy(renderer, texture.get(), NULL, &rectangle);
     return distance;
 }
 
@@ -96,6 +93,10 @@ void Player::calculateCollision(int position_y, int distance) {
         distance_y =  GameConstants::PLAYER_MIN_Y;
         counter++;
     }
+}
+
+Player::Player(SDL_Renderer *renderer) {
+    texture = loadTexture(renderer, "data/kula.png");
 }
 
 
